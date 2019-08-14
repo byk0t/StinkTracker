@@ -63,18 +63,19 @@ export default class App extends React.Component {
   }
 
   async _sendData() {    
-    let position = await this._getPosition();
-    console.warn(position)
+    await this._getPosition((position) => {
+      this.setState({position:position});        
+      console.warn(position.coords);
+      console.warn(this.state.value);
+    });    
   }
 
-  async _getPosition() {    
+  async _getPosition(callback) {    
     const hasLocationPermission = await this._requestPositionPermission();
     if(hasLocationPermission) {
       Geolocation.getCurrentPosition(
-          (position) => {
-              // save position to the store
-              this.setState({position: position})
-              console.warn(position);
+          (position) => {             
+              callback(position)
           },
           (error) => {
               // See error code charts below.
@@ -82,7 +83,7 @@ export default class App extends React.Component {
           },
           { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
       );
-    }
+    }    
   }
 
   async _requestPositionPermission() {
@@ -99,10 +100,10 @@ export default class App extends React.Component {
         },
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.warn('You can use the location');
+        console.log('You can use the location');
         result = true;
       } else {
-        console.warn('Location permission denied');
+        console.log('Location permission denied');
       }
     } catch (err) {
       console.warn(err);
