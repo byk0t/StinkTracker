@@ -17,7 +17,8 @@ import {
   ImageBackground,
   Button,
   Alert,
-  PermissionsAndroid
+  PermissionsAndroid,
+  TouchableOpacity
 } from 'react-native';
 import Slider from '@react-native-community/slider';
 import Geolocation from 'react-native-geolocation-service';
@@ -39,23 +40,31 @@ export default class App extends React.Component {
         source={require('./app/background.jpeg')}      
         style={styles.background}>
         <View style={styles.container}>
-          <Text style={styles.value}>{this.state.value}</Text>
-          <Slider
-            style={styles.slider}
-            minimumValue={0}
-            maximumValue={10}
-            step={1}
-            minimumTrackTintColor="red"
-            maximumTrackTintColor="#000000"
-            onValueChange={value => this.setState({value: value})}
-          />
+          <View style={styles.circleWrapper}>
+            <View style={styles.circle}>
+              <Text style={styles.value}>{this.state.value}</Text>
+            </View>
+          </View>
+          <View style={styles.sliderWrapper}>
+            <View style={styles.ellipse}>
+              <Slider
+                style={styles.slider}
+                minimumValue={0}
+                maximumValue={10}
+                step={1}
+                minimumTrackTintColor="#fff"                
+                thumbTintColor="#fff"
+                onValueChange={value => this.setState({value: value})}
+              />
+            </View>
+          </View>
           <View style={styles.buttonWrapper}>
-            <Button
-              style={styles.button}
-              title="Отправить"            
-              accessibilityLabel="Learn more about this purple button"
-              onPress={ () => this._sendData() }
-            />
+            <TouchableOpacity
+              style={styles.submitButton}
+              activeOpacity = { .5 }
+              onPress={ () => this._sendData() }>
+              <Text style={styles.buttonText}>Отправить</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ImageBackground>      
@@ -74,7 +83,7 @@ export default class App extends React.Component {
     const hasLocationPermission = await this._requestPositionPermission();
     if(hasLocationPermission) {
       Geolocation.getCurrentPosition(
-          (position) => {             
+          (position) => {
               callback(position)
           },
           (error) => {
@@ -125,28 +134,60 @@ const styles = StyleSheet.create({
   },
   value: {
     fontWeight: 'bold',
-    fontSize:50,
-    color: 'blue',
-    backgroundColor: 'white',
-    width:100,
-    textAlign:'center',
-    borderRadius: 25,
-    opacity: 0.8
+    fontSize:100,
+    color: '#fff',
+    textAlign:'center',    
   },
-  button: {
-    color: '#841584',
-    borderRadius: 25,
-    marginTop:10
+  circle: {
+    borderRadius: 200/2,
+    backgroundColor: '#00BCD4',
+    width:200,
+    height:200,
+    opacity: 0.8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#fff',
   },
-  buttonWrapper: {
-    marginTop:10,    
+  circleWrapper: {
+    flex:4,
+    justifyContent: 'center',
+  }, 
+  buttonWrapper: {    
+    flex:1,
+    justifyContent: 'center',
+  },
+  ellipse: {
+    backgroundColor: '#00BCD4',
+    opacity: 0.8,     
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#fff',    
+  },
+  sliderWrapper: {
+    flex: 1,
+    justifyContent: 'center',
   },
   slider: {
     width: 200, 
     height: 40,
-    backgroundColor: 'white',
+  },
+  submitButton: { 
+    paddingTop:5,
+    paddingBottom:5,
+    backgroundColor:'#00BCD4',
+    borderRadius:10,
+    borderWidth: 1,
+    borderColor: '#fff',
+    width:200,
     opacity: 0.8,
-    marginTop:10
+  }, 
+  buttonText:{
+    color:'#fff',
+    textAlign:'center',
+    fontWeight: 'bold',
+    fontSize: 20
   }
+
 });
 
