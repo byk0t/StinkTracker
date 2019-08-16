@@ -22,6 +22,7 @@ import {
 } from 'react-native';
 import Slider from '@react-native-community/slider';
 import Geolocation from 'react-native-geolocation-service';
+import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 
 export default class App extends React.Component {
   
@@ -29,7 +30,6 @@ export default class App extends React.Component {
     value: 0,
     position: null,
   }
-
 
   componentDidMount() {    
   }
@@ -71,17 +71,26 @@ export default class App extends React.Component {
     );
   }
 
-  async _sendData() {    
-    await this._getPosition((position) => {
-      this.setState({position:position});        
-      console.warn(position.coords);
-      console.warn(this.state.value);
-    });    
+  async _sendData() {
+    if(this.state.value == 0) {
+      Alert.alert(
+        "Нету запаха ?",
+        "Оценка должна быть больше ноля. Мы не записываем чистый воздух."
+      )
+    } else {
+      this._enableGPS();
+      await this._getPosition((position) => {
+        this.setState({position:position});        
+        console.log(position.coords);
+        console.log(this.state.value);
+      });
+    }
   }
 
-  async _getPosition(callback) {    
+  async _getPosition(callback) {
     const hasLocationPermission = await this._requestPositionPermission();
     if(hasLocationPermission) {
+      console.log(hasLocationPermission);
       Geolocation.getCurrentPosition(
           (position) => {
               callback(position)
@@ -115,9 +124,29 @@ export default class App extends React.Component {
         console.log('Location permission denied');
       }
     } catch (err) {
-      console.warn(err);
+      console.log(err);
     }
     return result;
+  }
+
+
+  _enableGPS() {
+    RNAndroidLocationEnabler.promptForEnableLocationIfNeeded({interval: 10000, fastInterval: 5000})
+      .then(data => {
+        // The user has accepted to enable the location services
+        // data can be :
+        //  - "already-enabled" if the location services has been already enabled
+        //  - "enabled" if user has clicked on OK button in the popup
+        console.log(data);
+      }).catch(err => {        
+        // The user has not accepted to enable the location services or something went wrong during the process
+        // "err" : { "code" : "ERR00|ERR01|ERR02", "message" : "message"}
+        // codes : 
+        //  - ERR00 : The user has clicked on Cancel button in the popup
+        //  - ERR01 : If the Settings change are unavailable
+        //  - ERR02 : If the popup has failed to open
+        console.log(err);
+      });
   }
 
 };
