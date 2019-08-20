@@ -13,6 +13,7 @@ export const StSlider = (props) => {
         minimumTrackTintColor="#fff"                
         thumbTintColor="#fff"
         onValueChange={props.onValueChange}
+        value={props.value}
       />
     </View>
 	);

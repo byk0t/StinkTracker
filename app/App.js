@@ -42,16 +42,25 @@ export default class App extends React.Component {
     return (           
       <StContainer>
         <View style={styles.circleWrapper}>
-          <StCircle value={this.state.value}/>
+          <StCircle value={this.state.value} onPress={ () => this._updateValue() }/>
         </View>
         <View style={styles.sliderWrapper}>
-          <StSlider onValueChange={value => this.setState({value: value})}/>
+          <StSlider onValueChange={value => this.setState({value: value})} value={this.state.value}/>
         </View>
         <View style={styles.buttonWrapper}>
           <StButton onPress={() => this._sendData()} text="Отправить"/>          
         </View>
       </StContainer>
     );
+  }
+
+  _updateValue() {
+    let v = this.state.value;
+    if (v > 9)
+      v = 0
+    else
+      v++;    
+    this.setState({value: v})
   }
 
   async _sendData() {

@@ -1,10 +1,12 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, TouchableWithoutFeedback,Alert } from 'react-native';
 
 export const StCircle = (props) => {
-	return (
-		<View style={styles.circle}>
-      <Text style={styles.value}>{props.value}</Text>
+	return (		
+    <View style={styles.circle} >
+      <TouchableWithoutFeedback onPress={ props.onPress }>
+        <Text style={styles.value}>{props.value}</Text>
+      </TouchableWithoutFeedback>
     </View>
 	);
 }
