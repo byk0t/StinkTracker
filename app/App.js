@@ -21,11 +21,12 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import Slider from '@react-native-community/slider';
+
 import Geolocation from 'react-native-geolocation-service';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 
-import { Container } from './components/container';
+import { StContainer } from './components/container';
+import { StCircle, StSlider, StButton } from './components';
 
 export default class App extends React.Component {
   
@@ -39,34 +40,17 @@ export default class App extends React.Component {
 
   render() {
     return (           
-      <Container>
+      <StContainer>
         <View style={styles.circleWrapper}>
-          <View style={styles.circle}>
-            <Text style={styles.value}>{this.state.value}</Text>
-          </View>
+          <StCircle value={this.state.value}/>
         </View>
         <View style={styles.sliderWrapper}>
-          <View style={styles.ellipse}>
-            <Slider
-              style={styles.slider}
-              minimumValue={0}
-              maximumValue={10}
-              step={1}
-              minimumTrackTintColor="#fff"                
-              thumbTintColor="#fff"
-              onValueChange={value => this.setState({value: value})}
-            />
-          </View>
+          <StSlider onValueChange={value => this.setState({value: value})}/>
         </View>
         <View style={styles.buttonWrapper}>
-          <TouchableOpacity
-            style={styles.submitButton}
-            activeOpacity = { .5 }
-            onPress={ () => this._sendData() }>
-            <Text style={styles.buttonText}>Отправить</Text>
-          </TouchableOpacity>
+          <StButton onPress={() => this._sendData()} text="Отправить"/>          
         </View>
-      </Container>
+      </StContainer>
     );
   }
 
@@ -150,24 +134,7 @@ export default class App extends React.Component {
 
 };
 
-const styles = StyleSheet.create({  
-  value: {
-    fontWeight: 'bold',
-    fontSize:100,
-    color: '#fff',
-    textAlign:'center',    
-  },
-  circle: {
-    borderRadius: 200/2,
-    backgroundColor: '#00BCD4',
-    width:200,
-    height:200,
-    opacity: 0.8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: '#fff',
-  },
+const styles = StyleSheet.create({    
   circleWrapper: {
     flex:4,
     justifyContent: 'center',
@@ -175,38 +142,10 @@ const styles = StyleSheet.create({
   buttonWrapper: {    
     flex:1,
     justifyContent: 'center',
-  },
-  ellipse: {
-    backgroundColor: '#00BCD4',
-    opacity: 0.8,     
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#fff',    
-  },
+  },  
   sliderWrapper: {
     flex: 1,
     justifyContent: 'center',
   },
-  slider: {
-    width: 200, 
-    height: 40,
-  },
-  submitButton: { 
-    paddingTop:5,
-    paddingBottom:5,
-    backgroundColor:'#00BCD4',
-    borderRadius:10,
-    borderWidth: 1,
-    borderColor: '#fff',
-    width:200,
-    opacity: 0.8,
-  }, 
-  buttonText:{
-    color:'#fff',
-    textAlign:'center',
-    fontWeight: 'bold',
-    fontSize: 20
-  }
-
 });
 

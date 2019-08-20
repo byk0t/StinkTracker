@@ -1,7 +1,7 @@
 import React from 'react';
 import { ImageBackground, View, StyleSheet } from 'react-native';
 
-export const Container = (props) => {
+export const StContainer = (props) => {
 	return (
 		<ImageBackground 
 	        source={require('./background.jpeg')}      
