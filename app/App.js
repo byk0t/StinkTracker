@@ -48,7 +48,7 @@ export default class App extends React.Component {
           <StSlider onValueChange={value => this.setState({value: value})} value={this.state.value}/>
         </View>
         <View style={styles.buttonWrapper}>
-          <StButton onPress={() => this._sendData()} text="Отправить"/>          
+          <StButton onPress={() => this._submit()} text="Отправить"/>          
         </View>
       </StContainer>
     );
@@ -63,7 +63,7 @@ export default class App extends React.Component {
     this.setState({value: v})
   }
 
-  async _sendData() {
+  async _submit() {
     if(this.state.value == 0) {
       Alert.alert(
         "Нету запаха ?",
@@ -72,7 +72,26 @@ export default class App extends React.Component {
     } else {
       this._enableGPS();
       await this._getPosition((position) => {
-        this.setState({position:position});        
+        this.setState({position:position});
+
+        // let result = {};        
+        // try {          
+          
+        //   let response = await fetch(ApiConfig.endpoint+'login', {
+        //         method: 'POST',
+        //         headers: {
+        //           Accept: 'application/json',
+        //           'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify({ payload: dataForm }),  
+        //       });     
+        //       let responseJson = await response.json();         
+        //       result = { status: 'ok', data: responseJson };
+        //       this.setLastStatus('ok');
+        // } catch(error) {
+        //   result = { status:'error', error:error }; 
+        // }
+
         console.log(position.coords);
         console.log(this.state.value);
       });
