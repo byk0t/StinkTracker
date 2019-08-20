@@ -20,9 +20,12 @@ import {
   PermissionsAndroid,
   TouchableOpacity
 } from 'react-native';
+
 import Slider from '@react-native-community/slider';
 import Geolocation from 'react-native-geolocation-service';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
+
+import { Container } from './components/container';
 
 export default class App extends React.Component {
   
@@ -36,38 +39,34 @@ export default class App extends React.Component {
 
   render() {
     return (           
-      <ImageBackground 
-        source={require('./app/background.jpeg')}      
-        style={styles.background}>
-        <View style={styles.container}>
-          <View style={styles.circleWrapper}>
-            <View style={styles.circle}>
-              <Text style={styles.value}>{this.state.value}</Text>
-            </View>
-          </View>
-          <View style={styles.sliderWrapper}>
-            <View style={styles.ellipse}>
-              <Slider
-                style={styles.slider}
-                minimumValue={0}
-                maximumValue={10}
-                step={1}
-                minimumTrackTintColor="#fff"                
-                thumbTintColor="#fff"
-                onValueChange={value => this.setState({value: value})}
-              />
-            </View>
-          </View>
-          <View style={styles.buttonWrapper}>
-            <TouchableOpacity
-              style={styles.submitButton}
-              activeOpacity = { .5 }
-              onPress={ () => this._sendData() }>
-              <Text style={styles.buttonText}>Отправить</Text>
-            </TouchableOpacity>
+      <Container>
+        <View style={styles.circleWrapper}>
+          <View style={styles.circle}>
+            <Text style={styles.value}>{this.state.value}</Text>
           </View>
         </View>
-      </ImageBackground>      
+        <View style={styles.sliderWrapper}>
+          <View style={styles.ellipse}>
+            <Slider
+              style={styles.slider}
+              minimumValue={0}
+              maximumValue={10}
+              step={1}
+              minimumTrackTintColor="#fff"                
+              thumbTintColor="#fff"
+              onValueChange={value => this.setState({value: value})}
+            />
+          </View>
+        </View>
+        <View style={styles.buttonWrapper}>
+          <TouchableOpacity
+            style={styles.submitButton}
+            activeOpacity = { .5 }
+            onPress={ () => this._sendData() }>
+            <Text style={styles.buttonText}>Отправить</Text>
+          </TouchableOpacity>
+        </View>
+      </Container>
     );
   }
 
@@ -151,16 +150,7 @@ export default class App extends React.Component {
 
 };
 
-const styles = StyleSheet.create({
-  background: {
-    width: '100%', 
-    height: '100%',    
-  },
-  container: {
-    flex:1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+const styles = StyleSheet.create({  
   value: {
     fontWeight: 'bold',
     fontSize:100,
