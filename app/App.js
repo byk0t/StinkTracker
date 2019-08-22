@@ -8,18 +8,11 @@
 
 import React, {Fragment} from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
-  ScrollView,
   View,
-  Text,
-  StatusBar,
-  ImageBackground,
   Button,
-  Alert,
+  Alert,  
   PermissionsAndroid,
-  TouchableOpacity,
-  Picker
 } from 'react-native';
 
 
@@ -27,7 +20,7 @@ import Geolocation from 'react-native-geolocation-service';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 
 import { StContainer } from './components/container';
-import { StCircle, StSlider, StButton, StPicker } from './components';
+import { StCircle, StSlider, StButton, StPicker, StHelpButton, StHelpModal } from './components';
 
 export default class App extends React.Component {
   
@@ -35,6 +28,7 @@ export default class App extends React.Component {
     value: 0,
     position: null,
     smellType: 0,
+    isHelpVisible: false,
   };
 
   smellTypes = [
@@ -66,11 +60,20 @@ export default class App extends React.Component {
         <View style={styles.buttonWrapper}>
           <StButton onPress={() => this._submit()} text="Отправить"/>          
         </View>
+        <View style={styles.helpButtonWrapper}>
+          <StHelpButton onPress={() => this._toggleHelp()}/>
+        </View>
+
+        <StHelpModal visible={this.state.isHelpVisible} onClose={() => this._toggleHelp()}/>        
+
       </StContainer>
     );
   }
 
-  _updateValue() {
+  _toggleHelp() {
+    this.setState({isHelpVisible: !this.state.isHelpVisible})
+  }
+   _updateValue() {
     let v = this.state.value;
     if (v > 9)
       v = 0
@@ -180,7 +183,7 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({    
   circleWrapper: {
-    flex:3,
+    flex:4,
     justifyContent: 'center',
   }, 
   buttonWrapper: {    
@@ -194,6 +197,10 @@ const styles = StyleSheet.create({
   pickerWrapper: {
     flex:1,
     justifyContent: 'center',
+  },  
+  helpButtonWrapper: {    
+    flex:1,
+    width:'100%'
   },  
 });
 
