@@ -18,7 +18,8 @@ import {
   Button,
   Alert,
   PermissionsAndroid,
-  TouchableOpacity
+  TouchableOpacity,
+  Picker
 } from 'react-native';
 
 
@@ -26,14 +27,25 @@ import Geolocation from 'react-native-geolocation-service';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 
 import { StContainer } from './components/container';
-import { StCircle, StSlider, StButton } from './components';
+import { StCircle, StSlider, StButton, StPicker } from './components';
 
 export default class App extends React.Component {
   
   state = {
     value: 0,
     position: null,
-  }
+    smellType: 0,
+  };
+
+  smellTypes = [
+    { label: 'Неопределенный', value: 0 },
+    { label: 'Канализация', value: 1 },
+    { label: 'Навоз', value: 2 },
+    { label: 'Паленая резина', value: 3 },
+    { label: 'Сероводород', value: 4 },
+    { label: 'Отстойники', value: 5 },
+    { label: 'Гатово', value: 6 },    
+  ];
 
   componentDidMount() {    
   }
@@ -46,6 +58,10 @@ export default class App extends React.Component {
         </View>
         <View style={styles.sliderWrapper}>
           <StSlider onValueChange={value => this.setState({value: value})} value={this.state.value}/>
+        </View>
+        <View style={styles.pickerWrapper}>
+          <StPicker onValueChange={(itemValue, itemIndex) => this.setState({smellType: itemValue})} 
+            smellType={this.state.smellType} smellTypes={this.smellTypes}/>
         </View>
         <View style={styles.buttonWrapper}>
           <StButton onPress={() => this._submit()} text="Отправить"/>          
@@ -136,7 +152,7 @@ export default class App extends React.Component {
       }
     } catch (err) {
       console.log(err);
-    }
+    } 
     return result;
   }
 
@@ -164,7 +180,7 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({    
   circleWrapper: {
-    flex:4,
+    flex:3,
     justifyContent: 'center',
   }, 
   buttonWrapper: {    
@@ -175,5 +191,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
+  pickerWrapper: {
+    flex:1,
+    justifyContent: 'center',
+  },  
 });
 
