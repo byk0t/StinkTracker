@@ -11,7 +11,8 @@ import {
   StyleSheet,
   View,
   Button,
-  Alert,  
+  Alert,
+  Text,  
   PermissionsAndroid,
 } from 'react-native';
 
@@ -21,6 +22,8 @@ import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 
 import { StContainer } from './components/container';
 import { StCircle, StSlider, StButton, StPicker, StHelpButton, StHelpModal } from './components';
+
+import I18n from "./utils/i18n";
 
 export default class App extends React.Component {
   
@@ -32,13 +35,13 @@ export default class App extends React.Component {
   };
 
   smellTypes = [
-    { label: 'Неопределенный', value: 0 },
-    { label: 'Канализация', value: 1 },
-    { label: 'Навоз', value: 2 },
-    { label: 'Паленая резина', value: 3 },
-    { label: 'Сероводород', value: 4 },
-    { label: 'Отстойники', value: 5 },
-    { label: 'Гатово', value: 6 },    
+    { label: I18n.t("unclear"), value: 0 },
+    { label: I18n.t("sewage"), value: 1 },
+    { label: I18n.t("manure"), value: 2 },
+    { label: I18n.t("burningRubber"), value: 3 },
+    { label: I18n.t("hydrogenSulfide"), value: 4 },
+    { label: I18n.t("treatmentFacilities"), value: 5 },
+    { label: I18n.t("tannery"), value: 6 },    
   ];
 
   componentDidMount() {    
@@ -58,14 +61,12 @@ export default class App extends React.Component {
             smellType={this.state.smellType} smellTypes={this.smellTypes}/>
         </View>
         <View style={styles.buttonWrapper}>
-          <StButton onPress={() => this._submit()} text="Отправить"/>          
+          <StButton onPress={() => this._submit()} text={I18n.t("send")}/>          
         </View>
         <View style={styles.helpButtonWrapper}>
           <StHelpButton onPress={() => this._toggleHelp()}/>
         </View>
-
         <StHelpModal visible={this.state.isHelpVisible} onClose={() => this._toggleHelp()}/>        
-
       </StContainer>
     );
   }
