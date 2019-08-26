@@ -21,7 +21,7 @@ import Geolocation from 'react-native-geolocation-service';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 
 import { StContainer } from './components/container';
-import { StCircle, StSlider, StButton, StPicker, StHelpButton, StHelpModal } from './components';
+import { StRow, StCircle, StSlider, StButton, StPicker, StHelpButton, StHelpModal } from './components';
 
 import I18n from "./utils/i18n";
 
@@ -50,22 +50,22 @@ export default class App extends React.Component {
   render() {
     return (           
       <StContainer>
-        <View style={styles.circleWrapper}>
+        <StRow flex={4}>
           <StCircle value={this.state.value} onPress={ () => this._updateValue() }/>
-        </View>
-        <View style={styles.sliderWrapper}>
+        </StRow>
+        <StRow flex={1}>
           <StSlider onValueChange={value => this.setState({value: value})} value={this.state.value}/>
-        </View>
-        <View style={styles.pickerWrapper}>
-          <StPicker onValueChange={(itemValue, itemIndex) => this.setState({smellType: itemValue})} 
-            smellType={this.state.smellType} smellTypes={this.smellTypes}/>
-        </View>
-        <View style={styles.buttonWrapper}>
+        </StRow>
+        <StRow flex={1}>
+            <StPicker onValueChange={(itemValue, itemIndex) => this.setState({smellType: itemValue})}
+                smellType={this.state.smellType} smellTypes={this.smellTypes}/>
+        </StRow>
+        <StRow flex={1}>
           <StButton onPress={() => this._submit()} text={I18n.t("send")}/>          
-        </View>
-        <View style={styles.helpButtonWrapper}>
+        </StRow>
+        <StRow flex={1} style={{width:'100%'}}>
           <StHelpButton onPress={() => this._toggleHelp()}/>
-        </View>
+        </StRow>
         <StHelpModal visible={this.state.isHelpVisible} onClose={() => this._toggleHelp()}/>        
       </StContainer>
     );
@@ -181,27 +181,3 @@ export default class App extends React.Component {
   }
 
 };
-
-const styles = StyleSheet.create({    
-  circleWrapper: {
-    flex:4,
-    justifyContent: 'center',
-  }, 
-  buttonWrapper: {    
-    flex:1,
-    justifyContent: 'center',
-  },  
-  sliderWrapper: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  pickerWrapper: {
-    flex:1,
-    justifyContent: 'center',
-  },  
-  helpButtonWrapper: {    
-    flex:1,
-    width:'100%'
-  },  
-});
-
