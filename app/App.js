@@ -86,8 +86,8 @@ export default class App extends React.Component {
   async _submit() {
     if(this.state.value == 0) {
       Alert.alert(
-        "Нету запаха ?",
-        "Оценка должна быть больше ноля. Мы не записываем чистый воздух."
+        I18n.t("noSmell"),
+        I18n.t("noSmellExplanation")
       )
     } else {
       this._enableGPS();
@@ -141,11 +141,11 @@ export default class App extends React.Component {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
-          title: 'Разрешение геолокации',
-          message: 'Для отправки данных, нам нужно знать ваши координаты',
-          buttonNeutral: 'Позже',
-          buttonNegative: 'Завершить',
-          buttonPositive: 'Хорошо',
+          title: I18n.t("positionPermission"),
+          message: I18n.t("positionPermissionText"),
+          buttonNeutral: I18n.t("later"),
+          buttonNegative: I18n.t("close"),
+          buttonPositive: I18n.t("ok"),
         },
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
