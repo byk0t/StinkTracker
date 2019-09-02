@@ -27,19 +27,16 @@ import I18n from "./utils/i18n";
 
 import API, { graphqlOperation } from '@aws-amplify/api';
 import PubSub from '@aws-amplify/pubsub';
-import { createTodo } from '../src/graphql/mutations';
+import { createStink } from '../src/graphql/mutations';
 
 import config from '../aws-exports'
 
 API.configure(config)             // Configure Amplify
 PubSub.configure(config)
 
-
-async function createNewTodo() {
-  const todo = { name: "Test 245" , description: "Realtime and Offline"}
-  await API.graphql(graphqlOperation(createTodo, { input: todo }))
+async function createNewStink(stink) {
+  await API.graphql(graphqlOperation(createStink, { input: stink }))
 }
-
 
 export default class App extends React.Component {
   
@@ -51,13 +48,13 @@ export default class App extends React.Component {
   };
 
   smellTypes = [
-    { label: I18n.t("unclear"), value: 0 },
-    { label: I18n.t("sewage"), value: 1 },
-    { label: I18n.t("manure"), value: 2 },
-    { label: I18n.t("burningRubber"), value: 3 },
-    { label: I18n.t("hydrogenSulfide"), value: 4 },
-    { label: I18n.t("treatmentFacilities"), value: 5 },
-    { label: I18n.t("tannery"), value: 6 },    
+    { label: I18n.t("unclear"), value: "unclear" },
+    { label: I18n.t("sewage"), value: "sewage" },
+    { label: I18n.t("manure"), value: "manure" },
+    { label: I18n.t("burningRubber"), value: "burningRubber" },
+    { label: I18n.t("hydrogenSulfide"), value: "hydrogenSulfide" },
+    { label: I18n.t("treatmentFacilities"), value: "treatmentFacilities" },
+    { label: I18n.t("tannery"), value: "treatmentFacilities" },
   ];
 
   componentDidMount() {    
@@ -100,37 +97,24 @@ export default class App extends React.Component {
   }
 
   async _submit() {
-    await createNewTodo();
+    // await createNewTodo();
     if(this.state.value == 0) {
-      Alert.alert(
-        I18n.t("noSmell"),
-        I18n.t("noSmellExplanation")
-      );      
+      Alert.alert(I18n.t("noSmell"), I18n.t("noSmellExplanation"));
     } else {
       this._enableGPS();
       await this._getPosition((position) => {
         this.setState({position:position});
-
-        // let result = {};        
-        // try {          
-          
-        //   let response = await fetch(ApiConfig.endpoint+'login', {
-        //         method: 'POST',
-        //         headers: {
-        //           Accept: 'application/json',
-        //           'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify({ payload: dataForm }),  
-        //       });     
-        //       let responseJson = await response.json();         
-        //       result = { status: 'ok', data: responseJson };
-        //       this.setLastStatus('ok');
-        // } catch(error) {
-        //   result = { status:'error', error:error }; 
-        // }
-
-        console.log(position.coords);
-        console.log(this.state.value);
+        const stink = {
+          value:this.state.value,
+          lat:position.coords.latitude,
+          lng:position.coords.longitude,
+          smell:this.state.smellType,
+        };
+        createNewStink(stink);
+        if(__DEV__) {
+          console.log("New Stink Request has benn sent");
+          console.log(stink);
+        }
       });
     }
   }

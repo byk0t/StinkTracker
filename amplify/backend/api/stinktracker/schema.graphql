@@ -1,5 +1,9 @@
-type Todo @model {
-  id: ID!
-  name: String!
-  description: String
+type Stink @model {
+	id: ID!,
+	value: Int!,
+	lat: Float!,
+	lng: Float!,
+	smell: String!
+	wind: String,
+	comment: String
 }

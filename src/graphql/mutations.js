@@ -1,27 +1,39 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createTodo = `mutation CreateTodo($input: CreateTodoInput!) {
-  createTodo(input: $input) {
+export const createStink = `mutation CreateStink($input: CreateStinkInput!) {
+  createStink(input: $input) {
     id
-    name
-    description
+    value
+    lat
+    lng
+    smell
+    wind
+    comment
   }
 }
 `;
-export const updateTodo = `mutation UpdateTodo($input: UpdateTodoInput!) {
-  updateTodo(input: $input) {
+export const updateStink = `mutation UpdateStink($input: UpdateStinkInput!) {
+  updateStink(input: $input) {
     id
-    name
-    description
+    value
+    lat
+    lng
+    smell
+    wind
+    comment
   }
 }
 `;
-export const deleteTodo = `mutation DeleteTodo($input: DeleteTodoInput!) {
-  deleteTodo(input: $input) {
+export const deleteStink = `mutation DeleteStink($input: DeleteStinkInput!) {
+  deleteStink(input: $input) {
     id
-    name
-    description
+    value
+    lat
+    lng
+    smell
+    wind
+    comment
   }
 }
 `;

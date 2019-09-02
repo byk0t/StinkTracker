@@ -1,27 +1,39 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateTodo = `subscription OnCreateTodo {
-  onCreateTodo {
+export const onCreateStink = `subscription OnCreateStink {
+  onCreateStink {
     id
-    name
-    description
+    value
+    lat
+    lng
+    smell
+    wind
+    comment
   }
 }
 `;
-export const onUpdateTodo = `subscription OnUpdateTodo {
-  onUpdateTodo {
+export const onUpdateStink = `subscription OnUpdateStink {
+  onUpdateStink {
     id
-    name
-    description
+    value
+    lat
+    lng
+    smell
+    wind
+    comment
   }
 }
 `;
-export const onDeleteTodo = `subscription OnDeleteTodo {
-  onDeleteTodo {
+export const onDeleteStink = `subscription OnDeleteStink {
+  onDeleteStink {
     id
-    name
-    description
+    value
+    lat
+    lng
+    smell
+    wind
+    comment
   }
 }
 `;
