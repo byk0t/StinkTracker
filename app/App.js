@@ -25,6 +25,22 @@ import { StRow, StCircle, StSlider, StButton, StPicker, StHelpButton, StHelpModa
 
 import I18n from "./utils/i18n";
 
+import API, { graphqlOperation } from '@aws-amplify/api';
+import PubSub from '@aws-amplify/pubsub';
+import { createTodo } from '../src/graphql/mutations';
+
+import config from '../aws-exports'
+
+API.configure(config)             // Configure Amplify
+PubSub.configure(config)
+
+
+async function createNewTodo() {
+  const todo = { name: "Test 245" , description: "Realtime and Offline"}
+  await API.graphql(graphqlOperation(createTodo, { input: todo }))
+}
+
+
 export default class App extends React.Component {
   
   state = {
@@ -84,11 +100,12 @@ export default class App extends React.Component {
   }
 
   async _submit() {
+    await createNewTodo();
     if(this.state.value == 0) {
       Alert.alert(
         I18n.t("noSmell"),
         I18n.t("noSmellExplanation")
-      )
+      );      
     } else {
       this._enableGPS();
       await this._getPosition((position) => {
