@@ -10,6 +10,8 @@ export default {
   tannery: "Гарбарны завод",
   noSmell: "Не пахне ?",
   noSmellExplanation: "Інтэнсіўнасць паху павiнна быць большая за ноль.",
+  wait: "Чакайце",
+  oneRequestPerMinute: "Вы можаце зрабіць толькі адзін запрос у хвіліну",
   positionPermission: "Дазвол на геалакацыю",
   positionPermissionText: "Патрэбны вашы каардынаты для таго как адаслаць iнфармацыю.",
   later: "Пазней",

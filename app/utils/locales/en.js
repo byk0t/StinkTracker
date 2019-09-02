@@ -10,6 +10,8 @@ export default {
   tannery: "Tannery",
   noSmell: "No Smell ?",
   noSmellExplanation: "The Smell Intensity should be higher than zero.",
+  wait: "Wait",
+  oneRequestPerMinute: "You can make only one request per minute",
   positionPermission: "Position Permission",
   positionPermissionText: "The app needs to know your position in order to send a data",
   later: "Later",

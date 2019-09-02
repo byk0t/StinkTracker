@@ -10,6 +10,8 @@ export default {
   tannery: "Кожевенный завод",
   noSmell: "Нету запаха ?",
   noSmellExplanation: "Интенсивность запаха должна быть больше ноля.",
+  wait: "Подождите",
+  oneRequestPerMinute: "Вы можете сделать только один запрос в минуту",
   positionPermission: "Разрешение геолокации",
   positionPermissionText: "Для отправки данных, приложению нужно знать ваши координаты",
   later: "Позже",

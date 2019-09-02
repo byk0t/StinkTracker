@@ -19,6 +19,7 @@ import {
 
 import Geolocation from 'react-native-geolocation-service';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { StContainer } from './components/container';
 import { StRow, StCircle, StSlider, StButton, StPicker, StHelpButton, StHelpModal } from './components';
@@ -35,8 +36,41 @@ API.configure(config)             // Configure Amplify
 PubSub.configure(config)
 
 async function createNewStink(stink) {
-  await API.graphql(graphqlOperation(createStink, { input: stink }))
+  let result = false;
+  try {
+    const response = await API.graphql(graphqlOperation(createStink, { input: stink }));    
+    if(typeof response.data.createStink !== 'undefined') {
+      result = true;
+    }
+  } catch(error) {
+    console.log(error);
+  }
+  return result;
 }
+
+async function updateLastRequestTime() {
+  try {
+    const now = (new Date()).getTime().toString();
+    await AsyncStorage.setItem('@last_request_time', now);
+  } catch (e) {
+    // saving error
+    console.log(e);
+  }
+}
+
+async function getLastRequestTime() {
+  try {
+    const value = await AsyncStorage.getItem('@last_request_time')
+    if(value !== null) {
+      return parseInt(value);
+    }
+  } catch(e) {
+    console.log(e);    
+  }
+  return 0;
+}
+
+
 
 export default class App extends React.Component {
   
@@ -45,6 +79,7 @@ export default class App extends React.Component {
     position: null,
     smellType: 0,
     isHelpVisible: false,
+    lastRequestTime: null,
   };
 
   smellTypes = [
@@ -96,26 +131,36 @@ export default class App extends React.Component {
     this.setState({value: v})
   }
 
-  async _submit() {
-    // await createNewTodo();
+  async _submit() {    
     if(this.state.value == 0) {
       Alert.alert(I18n.t("noSmell"), I18n.t("noSmellExplanation"));
     } else {
-      this._enableGPS();
-      await this._getPosition((position) => {
-        this.setState({position:position});
-        const stink = {
-          value:this.state.value,
-          lat:position.coords.latitude,
-          lng:position.coords.longitude,
-          smell:this.state.smellType,
-        };
-        createNewStink(stink);
-        if(__DEV__) {
-          console.log("New Stink Request has benn sent");
-          console.log(stink);
-        }
-      });
+      const now = (new Date()).getTime();
+      const time = await getLastRequestTime();
+      const diff = (now - time) / 1000;
+      if(diff > 60) {
+        this._enableGPS();
+        await this._getPosition((position) => {
+          this.setState({position:position});
+          const stink = {
+            value:this.state.value,
+            lat:position.coords.latitude,
+            lng:position.coords.longitude,
+            smell:this.state.smellType,
+          };
+          const isOk = createNewStink(stink);
+          if(isOk) {
+            // @todo we can't use await here because this callback function hasn't got async keyword
+            updateLastRequestTime();
+          }
+          if(__DEV__) {
+            console.log("New Stink Request has benn sent");
+            console.log(stink);
+          }
+        });
+      } else {
+        Alert.alert(I18n.t("wait"), I18n.t("oneRequestPerMinute"));
+      }
     }
   }
 
