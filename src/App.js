@@ -90,8 +90,8 @@ export default class App extends React.Component {
       Alert.alert(I18n.t("noSmell"), I18n.t("noSmellExplanation"));
     } else {
       const now = (new Date()).getTime();
-      const time = await getLastRequestTime();
-      const diff = (now - time) / 1000;
+      const before = await getLastRequestTime();
+      const diff = (now - before) / 1000; // seconds
       if(diff > 60) {
         this._enableGPS();
         await this._getPosition((position) => {
