@@ -18,7 +18,7 @@ import { StRow, StCircle, StSlider, StButton, StPicker, StHelpButton, StHelpModa
 import I18n from "./utils/i18n";
 import { createNewStink } from './utils/aws';
 import { updateLastRequestTime, getLastRequestTime } from './utils/storage';
-import smellTypes from './utils/smell-types';
+import { getTranslatedSmellTypes } from './utils/smell-types';
 
 export default class App extends React.Component {
   
@@ -69,9 +69,7 @@ export default class App extends React.Component {
   }
 
   _loadSmellTypes() {
-    this.smellTypes = smellTypes.map(v => {
-      return  { label: I18n.t(v), value: I18n.t(v) }
-    });
+    this.smellTypes = getTranslatedSmellTypes();
   }
 
   _toggleHelp() {
