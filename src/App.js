@@ -7,14 +7,7 @@
  */
 
 import React, {Fragment} from 'react';
-import {
-  StyleSheet,
-  View,
-  Button,
-  Alert,
-  Text,  
-  PermissionsAndroid,
-} from 'react-native';
+import { Alert, ActivityIndicator, PermissionsAndroid } from 'react-native';
 
 
 import Geolocation from 'react-native-geolocation-service';
@@ -34,6 +27,7 @@ export default class App extends React.Component {
     smellType: 0,
     isHelpVisible: false,
     lastRequestTime: null,
+    isLoading: false,
   };
 
   smellTypes = [
@@ -52,6 +46,8 @@ export default class App extends React.Component {
   render() {
     return (           
       <StContainer>
+        { this.state.isLoading &&  <ActivityIndicator size="large" color="#fff" animating={true}/> }
+        { !this.state.isLoading && <>
         <StRow flex={4}>
           <StCircle value={this.state.value} onPress={ () => this._updateValue() }/>
         </StRow>
@@ -68,7 +64,8 @@ export default class App extends React.Component {
         <StRow flex={1} style={{width:'100%'}}>
           <StHelpButton onPress={() => this._toggleHelp()}/>
         </StRow>
-        <StHelpModal visible={this.state.isHelpVisible} onClose={() => this._toggleHelp()}/>        
+        <StHelpModal visible={this.state.isHelpVisible} onClose={() => this._toggleHelp()}/>
+        </> }
       </StContainer>
     );
   }
@@ -94,7 +91,7 @@ export default class App extends React.Component {
       const diff = (now - before) / 1000; // seconds
       if(diff > 60) {
         this._enableGPS();
-        await this._getPosition((position) => {
+        await this._getPosition(async (position) => {
           this.setState({position:position});
           const stink = {
             value:this.state.value,
@@ -102,10 +99,14 @@ export default class App extends React.Component {
             lng:position.coords.longitude,
             smell:this.state.smellType,
           };
-          const isOk = createNewStink(stink);
+          this.setState({isLoading: true});
+          const isOk = await createNewStink(stink);
+          this.setState({isLoading: false});
           if(isOk) {
-            // @todo we can't use await here because this callback function hasn't got async keyword
-            updateLastRequestTime();
+            await updateLastRequestTime();
+            Alert.alert(I18n.t("thanks"), I18n.t("thanksForSendingData"));
+          } else {
+            Alert.alert(I18n.t("error"), I18n.t("errorWhileSendingData"));
           }
           if(__DEV__) {
             console.log("New Stink Request has benn sent");

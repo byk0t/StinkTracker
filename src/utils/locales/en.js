@@ -17,6 +17,10 @@ export default {
   later: "Later",
   close: "Close",
   ok: "Ok",
+  error: "Error",
+  errorWhileSendingData: "Error while sending data. Try again later or contact developer.",
+  thanks: "Thank you",
+  thanksForSendingData: "Thank you for sharing the data.",
   helpText: ` The app aims to help to automate collection of information about air condition and/or bad odor.
   
  1. Choose the smell intensity on a scale of 1 to 10.
