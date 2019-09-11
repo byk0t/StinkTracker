@@ -18,6 +18,7 @@ import { StRow, StCircle, StSlider, StButton, StPicker, StHelpButton, StHelpModa
 import I18n from "./utils/i18n";
 import { createNewStink } from './utils/aws';
 import { updateLastRequestTime, getLastRequestTime } from './utils/storage';
+import smellTypes from './utils/smell-types';
 
 export default class App extends React.Component {
   
@@ -30,17 +31,14 @@ export default class App extends React.Component {
     isLoading: false,
   };
 
-  smellTypes = [
-    { label: I18n.t("unclear"), value: "unclear" },
-    { label: I18n.t("sewage"), value: "sewage" },
-    { label: I18n.t("manure"), value: "manure" },
-    { label: I18n.t("burningRubber"), value: "burningRubber" },
-    { label: I18n.t("hydrogenSulfide"), value: "hydrogenSulfide" },
-    { label: I18n.t("treatmentFacilities"), value: "treatmentFacilities" },
-    { label: I18n.t("tannery"), value: "treatmentFacilities" },
-  ];
+  smellTypes = [];
 
-  componentDidMount() {    
+  constructor(props) {
+    super(props);
+    this._loadSmellTypes();
+  }
+
+  componentDidMount() {
   }
 
   render() {
@@ -68,6 +66,12 @@ export default class App extends React.Component {
         </> }
       </StContainer>
     );
+  }
+
+  _loadSmellTypes() {
+    this.smellTypes = smellTypes.map(v => {
+      return  { label: I18n.t(v), value: I18n.t(v) }
+    });
   }
 
   _toggleHelp() {
