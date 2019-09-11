@@ -19,58 +19,12 @@ import {
 
 import Geolocation from 'react-native-geolocation-service';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
-import AsyncStorage from '@react-native-community/async-storage';
 
 import { StContainer } from './components/container';
 import { StRow, StCircle, StSlider, StButton, StPicker, StHelpButton, StHelpModal } from './components';
-
 import I18n from "./utils/i18n";
-
-import API, { graphqlOperation } from '@aws-amplify/api';
-import PubSub from '@aws-amplify/pubsub';
-import { createStink } from './graphql/mutations';
-
-import config from '../aws-exports'
-
-API.configure(config)             // Configure Amplify
-PubSub.configure(config)
-
-async function createNewStink(stink) {
-  let result = false;
-  try {
-    const response = await API.graphql(graphqlOperation(createStink, { input: stink }));    
-    if(typeof response.data.createStink !== 'undefined') {
-      result = true;
-    }
-  } catch(error) {
-    console.log(error);
-  }
-  return result;
-}
-
-async function updateLastRequestTime() {
-  try {
-    const now = (new Date()).getTime().toString();
-    await AsyncStorage.setItem('@last_request_time', now);
-  } catch (e) {
-    // saving error
-    console.log(e);
-  }
-}
-
-async function getLastRequestTime() {
-  try {
-    const value = await AsyncStorage.getItem('@last_request_time')
-    if(value !== null) {
-      return parseInt(value);
-    }
-  } catch(e) {
-    console.log(e);    
-  }
-  return 0;
-}
-
-
+import { createNewStink } from './utils/aws';
+import { updateLastRequestTime, getLastRequestTime } from './utils/storage';
 
 export default class App extends React.Component {
   
