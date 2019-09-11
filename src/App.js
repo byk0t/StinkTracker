@@ -28,7 +28,7 @@ import I18n from "./utils/i18n";
 
 import API, { graphqlOperation } from '@aws-amplify/api';
 import PubSub from '@aws-amplify/pubsub';
-import { createStink } from '../src/graphql/mutations';
+import { createStink } from './graphql/mutations';
 
 import config from '../aws-exports'
 
