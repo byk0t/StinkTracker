@@ -1,14 +1,14 @@
 {
     "default": {
         "awscloudformation": {
-            "AuthRoleName": "stinktracker-default-20190829133146-authRole",
-            "UnauthRoleArn": "arn:aws:iam::222401727686:role/stinktracker-default-20190829133146-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::222401727686:role/stinktracker-default-20190829133146-authRole",
+            "AuthRoleName": "stinktracker-default-20190912163948-authRole",
+            "UnauthRoleArn": "arn:aws:iam::222401727686:role/stinktracker-default-20190912163948-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::222401727686:role/stinktracker-default-20190912163948-authRole",
             "Region": "eu-central-1",
-            "DeploymentBucketName": "stinktracker-default-20190829133146-deployment",
-            "UnauthRoleName": "stinktracker-default-20190829133146-unauthRole",
-            "StackName": "stinktracker-default-20190829133146",
-            "StackId": "arn:aws:cloudformation:eu-central-1:222401727686:stack/stinktracker-default-20190829133146/33dedb50-ca48-11e9-a404-0aa6b80efab2"
+            "DeploymentBucketName": "stinktracker-default-20190912163948-deployment",
+            "UnauthRoleName": "stinktracker-default-20190912163948-unauthRole",
+            "StackName": "stinktracker-default-20190912163948",
+            "StackId": "arn:aws:cloudformation:eu-central-1:222401727686:stack/stinktracker-default-20190912163948/c9ebdce0-d562-11e9-be9d-0a43c0b04aee"
         }
     }
 }
