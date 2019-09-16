@@ -16,7 +16,7 @@ export const StHelpModal = (props) => {
           <TouchableHighlight
             style={styles.closeButton}
             onPress={props.onClose}>
-            <Text>Закрыть</Text>
+            <Text>{I18n.t("close")}</Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     marginTop:10,
   },
   closeButton: {
-    borderWidth:1, 
+    borderWidth:1,
     marginTop:20,
     alignItems:'center'
   }
