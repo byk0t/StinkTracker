@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import Slider from '@react-native-community/slider';
+import { Styles } from "../config/theme";
 
 export const StSlider = (props) => {
 	return (
@@ -21,11 +22,11 @@ export const StSlider = (props) => {
 
 const styles = StyleSheet.create({
   ellipse: {
-    backgroundColor: '#00BCD4',
-    opacity: 0.8,     
+    backgroundColor: Styles.backgroundColor,
+    opacity: Styles.opacity,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#fff',    
+    borderColor: Styles.borderColor,
   },
   slider: {
     width: 200, 

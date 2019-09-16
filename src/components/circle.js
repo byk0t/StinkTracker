@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet, TouchableWithoutFeedback,Alert } from 'react-native';
+import { Styles } from "../config/theme";
 
 export const StCircle = (props) => {
 	return (		
@@ -20,13 +21,13 @@ const styles = StyleSheet.create({
   },
   circle: {
     borderRadius: 200/2,
-    backgroundColor: '#00BCD4',
+    backgroundColor: Styles.backgroundColor,
     width:200,
     height:200,
-    opacity: 0.8,
+    opacity: Styles.opacity,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    borderColor: '#fff',
+    borderColor: Styles.borderColor,
   },
 });

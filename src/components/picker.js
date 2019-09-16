@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Picker } from 'react-native';
+import { Styles } from "../config/theme";
 
 export const StPicker = (props) => {
 	return (
@@ -18,11 +19,11 @@ export const StPicker = (props) => {
 
 const styles = StyleSheet.create({
   ellipse: {
-    backgroundColor: '#00BCD4',
-    opacity: 0.8,     
+    backgroundColor: Styles.backgroundColor,
+    opacity: Styles.opacity,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#fff',
+    borderColor: Styles.borderColor,
     overflow: 'hidden',
   },
   picker: {

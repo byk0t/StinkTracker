@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Styles } from "../config/theme";
 
 export const StButton = (props) => {
 	return (
@@ -16,12 +17,12 @@ const styles = StyleSheet.create({
   submitButton: { 
     paddingTop:5,
     paddingBottom:5,
-    backgroundColor:'#00BCD4',
+    backgroundColor:Styles.backgroundColor,
     borderRadius:10,
     borderWidth: 1,
-    borderColor: '#fff',
+    borderColor: Styles.borderColor,
     width:200,
-    opacity: 0.8,
+    opacity: Styles.opacity,
   }, 
   buttonText:{
     color:'#fff',

@@ -1,5 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Image, Text, StyleSheet } from 'react-native';
+import { Styles } from "../config/theme";
 
 export const StHelpButton = (props) => {
 	return (
@@ -17,12 +18,12 @@ const styles = StyleSheet.create({
     right: 10,
     bottom: 10,
     borderWidth: 1,
-    borderColor: '#fff',
+    borderColor: Styles.borderColor,
     height:40,
     width:40,
     borderRadius:25,
-    backgroundColor:'#00BCD4',
-    opacity: 0.8,
+    backgroundColor:Styles.backgroundColor,
+    opacity: Styles.opacity,
   },
   questionMark: {
     color:'#fff', 
