@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-community/async-storage";
+import { log} from "./logger";
 
 export async function updateLastRequestTime() {
 	try {
@@ -6,7 +7,7 @@ export async function updateLastRequestTime() {
 		await AsyncStorage.setItem('@last_request_time', now);
 	} catch (e) {
 		// saving error
-		console.log(e);
+		log(e);
 	}
 }
 
@@ -17,7 +18,7 @@ export async function getLastRequestTime() {
 			return parseInt(value);
 		}
 	} catch(e) {
-		console.log(e);
+		log(e);
 	}
 	return 0;
 }

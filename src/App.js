@@ -19,6 +19,7 @@ import I18n from "./utils/i18n";
 import { createNewStink } from './utils/aws';
 import { updateLastRequestTime, getLastRequestTime } from './utils/storage';
 import { getTranslatedSmellTypes } from './utils/smell-types';
+import { log } from "./utils/logger";
 
 export default class App extends React.Component {
   
@@ -110,10 +111,8 @@ export default class App extends React.Component {
           } else {
             Alert.alert(I18n.t("error"), I18n.t("errorWhileSendingData"));
           }
-          if(__DEV__) {
-            console.log("New Stink Request has benn sent");
-            console.log(stink);
-          }
+          log("New Stink Request has benn sent");
+          log(stink);
         });
       } else {
         Alert.alert(I18n.t("wait"), I18n.t("oneRequestPerMinute"));
@@ -124,14 +123,13 @@ export default class App extends React.Component {
   async _getPosition(callback) {
     const hasLocationPermission = await this._requestPositionPermission();
     if(hasLocationPermission) {
-      console.log(hasLocationPermission);
       Geolocation.getCurrentPosition(
           (position) => {
               callback(position)
           },
           (error) => {
-              // See error code charts below.
-              console.log(error.code, error.message);
+            // See error code charts below.
+            log(error.code, error.message);
           },
           { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
       );
@@ -152,13 +150,13 @@ export default class App extends React.Component {
         },
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log('You can use the location');
+        log('You can use the location');
         result = true;
       } else {
-        console.log('Location permission denied');
+        log('Location permission denied');
       }
     } catch (err) {
-      console.log(err);
+      log(err);
     } 
     return result;
   }
@@ -171,7 +169,7 @@ export default class App extends React.Component {
         // data can be :
         //  - "already-enabled" if the location services has been already enabled
         //  - "enabled" if user has clicked on OK button in the popup
-        console.log(data);
+        log(data);
       }).catch(err => {        
         // The user has not accepted to enable the location services or something went wrong during the process
         // "err" : { "code" : "ERR00|ERR01|ERR02", "message" : "message"}
@@ -179,7 +177,7 @@ export default class App extends React.Component {
         //  - ERR00 : The user has clicked on Cancel button in the popup
         //  - ERR01 : If the Settings change are unavailable
         //  - ERR02 : If the popup has failed to open
-        console.log(err);
+        log(err);
       });
   }
 

@@ -1,7 +1,7 @@
 import API, { graphqlOperation } from '@aws-amplify/api';
 import PubSub from '@aws-amplify/pubsub';
 import { createStink } from '../graphql/mutations';
-
+import { log } from "./logger";
 import config from '../../aws-exports'
 
 API.configure(config)             // Configure Amplify
@@ -15,7 +15,7 @@ export async function createNewStink(stink) {
 			result = true;
 		}
 	} catch(error) {
-		console.log(error);
+		log(error);
 	}
 	return result;
 }
