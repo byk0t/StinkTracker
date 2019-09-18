@@ -3,7 +3,8 @@ type Stink @model {
 	value: Int!,
 	lat: Float!,
 	lng: Float!,
-	smell: String!
+	smell: String!,
+	locale: String,
 	wind: String,
 	comment: String
 }

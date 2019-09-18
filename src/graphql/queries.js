@@ -8,6 +8,7 @@ export const getStink = `query GetStink($id: ID!) {
     lat
     lng
     smell
+    locale
     wind
     comment
   }
@@ -25,6 +26,7 @@ export const listStinks = `query ListStinks(
       lat
       lng
       smell
+      locale
       wind
       comment
     }

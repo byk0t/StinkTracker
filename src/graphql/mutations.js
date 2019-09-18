@@ -8,6 +8,7 @@ export const createStink = `mutation CreateStink($input: CreateStinkInput!) {
     lat
     lng
     smell
+    locale
     wind
     comment
   }
@@ -20,6 +21,7 @@ export const updateStink = `mutation UpdateStink($input: UpdateStinkInput!) {
     lat
     lng
     smell
+    locale
     wind
     comment
   }
@@ -32,6 +34,7 @@ export const deleteStink = `mutation DeleteStink($input: DeleteStinkInput!) {
     lat
     lng
     smell
+    locale
     wind
     comment
   }

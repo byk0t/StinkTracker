@@ -101,6 +101,7 @@ export default class App extends React.Component {
             lat:position.coords.latitude,
             lng:position.coords.longitude,
             smell:this.state.smellType,
+            locale: I18n.locale,
           };
           this.setState({isLoading: true});
           const isOk = await createNewStink(stink);

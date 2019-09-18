@@ -8,6 +8,7 @@ export const onCreateStink = `subscription OnCreateStink {
     lat
     lng
     smell
+    locale
     wind
     comment
   }
@@ -20,6 +21,7 @@ export const onUpdateStink = `subscription OnUpdateStink {
     lat
     lng
     smell
+    locale
     wind
     comment
   }
@@ -32,6 +34,7 @@ export const onDeleteStink = `subscription OnDeleteStink {
     lat
     lng
     smell
+    locale
     wind
     comment
   }
