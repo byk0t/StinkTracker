@@ -108,11 +108,12 @@ export default class App extends React.Component {
           this.setState({isLoading: false});
           if(isOk) {
             await updateLastRequestTime();
+            log("New Stink Request has been sent");
             Alert.alert(I18n.t("thanks"), I18n.t("thanksForSendingData"));
           } else {
             Alert.alert(I18n.t("error"), I18n.t("errorWhileSendingData"));
+            log("New Stink Request has not been sent");
           }
-          log("New Stink Request has benn sent");
           log(stink);
         });
       } else {
