@@ -7,7 +7,7 @@
  */
 
 import React, {Fragment} from 'react';
-import { Alert, ActivityIndicator, PermissionsAndroid } from 'react-native';
+import { Alert, ActivityIndicator, PermissionsAndroid, View, Dimensions } from 'react-native';
 
 
 import Geolocation from 'react-native-geolocation-service';
@@ -30,6 +30,7 @@ export default class App extends React.Component {
     isHelpVisible: false,
     lastRequestTime: null,
     isLoading: false,
+    orientation: '',
   };
 
   smellTypes = [];
@@ -37,34 +38,64 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this._loadSmellTypes();
+    // this._detectOrientation();
   }
 
   componentDidMount() {
+    this._detectOrientation();
+    Dimensions.addEventListener('change', () => {
+      this._detectOrientation();
+    });
+  }
+
+  componentWillUnMount() {
+    Dimensions.removeEventListener('change');
+  }
+
+  _detectOrientation() {
+    const h = Dimensions.get('window').height; 
+    const w = Dimensions.get('window').width;
+    if(h >= w) {
+      this.setState({orientation:'portrait'});
+    } else {
+      this.setState({orientation:'landscape'});
+    }
   }
 
   render() {
+
+    let containerFlexDirection = 'column';
+    let helpBtnRMargin = 10;
+    if(this.state.orientation == 'landscape') {
+      containerFlexDirection = 'row';
+    }
+
     return (           
-      <StContainer>
+      <StContainer style={{flexDirection: containerFlexDirection}}>
         { this.state.isLoading &&  <ActivityIndicator size="large" color="#fff" animating={true}/> }
         { !this.state.isLoading && <>
-        <StRow flex={4}>
-          <StCircle value={this.state.value} onPress={ () => this._updateValue() }/>
-        </StRow>
-        <StRow flex={1}>
-          <StSlider onValueChange={value => this.setState({value: value})} value={this.state.value}/>
-        </StRow>
-        <StRow flex={1}>
-            <StPicker onValueChange={(itemValue, itemIndex) => this.setState({smellType: itemValue})}
-                smellType={this.state.smellType} smellTypes={this.smellTypes}/>
-        </StRow>
-        <StRow flex={1}>
-          <StButton onPress={() => this._submit()} text={I18n.t("send")}/>          
-        </StRow>
-        <StRow flex={1} style={{width:'100%'}}>
-          <StHelpButton onPress={() => this._toggleHelp()}/>
-        </StRow>
-        <StHelpModal visible={this.state.isHelpVisible} onClose={() => this._toggleHelp()}/>
-        </> }
+            <View style={{flex:4,height:'100%', alignItems:'center'}}>
+              <StRow flex={1}>
+                <StCircle value={this.state.value} onPress={ () => this._updateValue() }/>
+              </StRow>
+            </View>
+            <View style={{flex:4,height:'100%', flexDirection:'column', alignItems:'center'}}>
+              <StRow flex={1}>
+                <StSlider onValueChange={value => this.setState({value: value})} value={this.state.value}/>
+              </StRow>
+              <StRow flex={1}>
+                  <StPicker onValueChange={(itemValue, itemIndex) => this.setState({smellType: itemValue})}
+                      smellType={this.state.smellType} smellTypes={this.smellTypes}/>
+              </StRow>
+              <StRow flex={1}>
+                <StButton onPress={() => this._submit()} text={I18n.t("send")}/>
+              </StRow>
+            </View>
+            <StRow flex={1} style={{width:'100%', alignItems:'flex-end', marginRight:helpBtnRMargin}}>
+              <StHelpButton onPress={() => this._toggleHelp()}/>
+            </StRow>
+            <StHelpModal visible={this.state.isHelpVisible} onClose={() => this._toggleHelp()}/>
+          </> }
       </StContainer>
     );
   }
