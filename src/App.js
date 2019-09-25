@@ -7,7 +7,7 @@
  */
 
 import React, {Fragment} from 'react';
-import {Alert, ActivityIndicator, PermissionsAndroid, View, Dimensions, StyleSheet} from 'react-native';
+import {Alert, ActivityIndicator, PermissionsAndroid, Dimensions, StyleSheet} from 'react-native';
 
 
 import Geolocation from 'react-native-geolocation-service';
@@ -38,7 +38,6 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this._loadSmellTypes();
-    // this._detectOrientation();
   }
 
   componentDidMount() {
