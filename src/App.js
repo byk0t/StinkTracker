@@ -7,7 +7,7 @@
  */
 
 import React, {Fragment} from 'react';
-import { Alert, ActivityIndicator, PermissionsAndroid, View, Dimensions } from 'react-native';
+import {Alert, ActivityIndicator, PermissionsAndroid, View, Dimensions, StyleSheet} from 'react-native';
 
 
 import Geolocation from 'react-native-geolocation-service';
@@ -20,6 +20,7 @@ import { createNewStink } from './utils/aws';
 import { updateLastRequestTime, getLastRequestTime } from './utils/storage';
 import { getTranslatedSmellTypes } from './utils/smell-types';
 import { log } from "./utils/logger";
+import {Styles} from "./config/theme";
 
 export default class App extends React.Component {
   
@@ -63,23 +64,18 @@ export default class App extends React.Component {
   }
 
   render() {
-
     let containerFlexDirection = 'column';
-    let helpBtnRMargin = 10;
     if(this.state.orientation == 'landscape') {
       containerFlexDirection = 'row';
     }
-
     return (           
       <StContainer style={{flexDirection: containerFlexDirection}}>
         { this.state.isLoading &&  <ActivityIndicator size="large" color="#fff" animating={true}/> }
         { !this.state.isLoading && <>
-            <View style={{flex:4,height:'100%', alignItems:'center'}}>
-              <StRow flex={1}>
-                <StCircle value={this.state.value} onPress={ () => this._updateValue() }/>
-              </StRow>
-            </View>
-            <View style={{flex:4,height:'100%', flexDirection:'column', alignItems:'center'}}>
+            <StRow flex={4} style={styles.circleContainer}>
+              <StCircle value={this.state.value} onPress={ () => this._updateValue() }/>
+            </StRow>
+            <StRow flex={4} style={styles.buttonsContainer}>
               <StRow flex={1}>
                 <StSlider onValueChange={value => this.setState({value: value})} value={this.state.value}/>
               </StRow>
@@ -90,8 +86,8 @@ export default class App extends React.Component {
               <StRow flex={1}>
                 <StButton onPress={() => this._submit()} text={I18n.t("send")}/>
               </StRow>
-            </View>
-            <StRow flex={1} style={{width:'100%', alignItems:'flex-end', marginRight:helpBtnRMargin}}>
+            </StRow>
+            <StRow flex={1} style={styles.helpButtonContainer}>
               <StHelpButton onPress={() => this._toggleHelp()}/>
             </StRow>
             <StHelpModal visible={this.state.isHelpVisible} onClose={() => this._toggleHelp()}/>
@@ -215,3 +211,20 @@ export default class App extends React.Component {
   }
 
 };
+
+const styles = StyleSheet.create({
+  circleContainer: {
+    height:'100%',
+    alignItems:'center'
+  },
+  buttonsContainer: {
+    height:'100%',
+    flexDirection:'column',
+    alignItems:'center'
+  },
+  helpButtonContainer: {
+    width:'100%',
+    alignItems:'flex-end',
+    marginRight:10
+  }
+});
