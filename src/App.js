@@ -20,7 +20,6 @@ import { createNewStink } from './utils/aws';
 import { updateLastRequestTime, getLastRequestTime } from './utils/storage';
 import { getTranslatedSmellTypes } from './utils/smell-types';
 import { log } from "./utils/logger";
-import {Styles} from "./config/theme";
 
 export default class App extends React.Component {
   
